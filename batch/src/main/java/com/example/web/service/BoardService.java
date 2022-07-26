@@ -18,15 +18,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-
-    @Autowired
-    public BoardService(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
-
-
     /**
      * 게시글 생성
      */
@@ -34,6 +28,7 @@ public class BoardService {
     public Long save(final BoardRequestDto params) {
 
         Board entity = boardRepository.save(params.toEntity());
+        System.out.println("entity = " + entity);
         return entity.getId();
     }
 
