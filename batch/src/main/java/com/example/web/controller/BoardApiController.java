@@ -1,7 +1,5 @@
 package com.example.web.controller;
 
-import com.example.exception.CustomException;
-import com.example.exception.ErrorCode;
 import com.example.web.dto.BoardRequestDto;
 import com.example.web.dto.BoardResponseDto;
 import com.example.web.service.BoardService;

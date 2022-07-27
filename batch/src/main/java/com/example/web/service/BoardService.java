@@ -8,7 +8,6 @@ import com.example.web.dto.BoardRequestDto;
 import com.example.web.dto.BoardResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,6 @@ public class BoardService {
     public Long save(final BoardRequestDto params) {
 
         Board entity = boardRepository.save(params.toEntity());
-        System.out.println("entity = " + entity);
         return entity.getId();
     }
 

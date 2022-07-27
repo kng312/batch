@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 
 <th:block layout:fragment="content">
     <!--/* 검색 영역 */-->
@@ -35,7 +36,7 @@
             </tbody>
         </table>
         <div class="btn_wrap text-right">
-            <a class="btn btn-primary waves-effect waves-light">Write</a>
+            <a th:href="@{/board/write}" class="btn btn-primary waves-effect waves-light">Write</a>
         </div>
 
         <!-- 페이지네이션 Rendering 영역 -->
@@ -49,6 +50,47 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
 	/*<![CDATA[*/
+			/**
+		 * 페이지 로딩 시점에 실행되는 함수
+		 */
+		window.onload = () => {
+
+			findAll();
+		}
+
+		/**
+		 * 게시글 리스트 조회
+		 */
+		function findAll() {
+
+			fetch('/api/boards').then(response => {
+				if (response.ok) {
+   					return response.json();
+				}
+			}).then(json => {
+				let html = '';
+
+				if (!json.length) {
+					html = '<td colspan="5">등록된 게시글이 없습니다.</td>';
+				} else {
+					json.forEach((obj, idx) => {
+						html += `
+							<tr>
+    							<td>${json.length - idx}</td>
+    							<td class="text-left">
+    								<a href="javascript: void(0);">${obj.title}</a>
+    							</td>
+    							<td>${obj.writer}</td>
+    							<td>${moment(obj.createdDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+    							<td>${obj.hits}</td>
+							</tr>
+						`;
+					});
+				}
+
+				document.getElementById('list').innerHTML = html;
+			});
+		}
 
 
 
